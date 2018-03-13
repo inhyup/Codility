@@ -20,6 +20,7 @@ public class StoneWall {
 				stack.push(element);
 				output++;
 			} else {
+				System.out.println("peek " + stack.peek());
 				while (!stack.isEmpty() && stack.peek() > element) {
 					stack.pop();
 				}
