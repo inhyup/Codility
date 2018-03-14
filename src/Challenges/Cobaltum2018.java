@@ -2,6 +2,7 @@ package Challenges;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,7 +24,17 @@ public class Cobaltum2018 {
 		
 		int[] g = { 1, 2, 3, 4, 5};
 		int[] h = { 3, 1, 5, 6, 8};
+		
+		int[] i = { 1, 5, 6 };
+		int[] j = { -2, 0, 2 };
 
+		int[] k = { 3, 5, 6, 8 };
+		int[] l = { 4, 4, 7, 7 };
+		
+		int[] m = { 4, 4, 4};
+		int[] n = { 3, 3, 3};
+		
+		
 		System.out.println(solution2(a, b));
 	}
 	
@@ -86,37 +97,100 @@ public class Cobaltum2018 {
 		return count;
 	}
 	
+	//33%
 	static int solution2(int[] A, int[] B) {
-		int output = 0;
+		int count = 0;
+		int temp = 0;
+		ArrayList<Integer> aList = new ArrayList<>();
+		ArrayList<Integer> bList = new ArrayList<>();
+		
+		ArrayList<Integer> aResultList = new ArrayList<>();
+		ArrayList<Integer> bResultList = new ArrayList<>();
+
+		int[] tempArray = new int[A.length];
 		
 		if (A.length != B.length) {
 			return -1;
 		}
-	
-		Map<Integer, Integer> aMap = new HashMap<>();
-		Map<Integer, Integer> bMap = new HashMap<>();
-		ArrayList<Integer> aList = new ArrayList<>();
+		
+		if (A.length == 0 || B.length == 0) {
+			return 0;
+		}
+		
+		if (A[0] < B[0]) {
+			tempArray = A;
+			A = B;
+			B = tempArray;
+		}
 		
 		for (int i = 0; i < A.length; i++) {
-			aMap.put(i, A[i]);
-			bMap.put(i, B[i]);
-			
 			aList.add(A[i]);
+			bList.add(B[i]);
+			aResultList.add(A[i]);
+			bResultList.add(B[i]);
 		}
 		
-	
-		System.out.println(aList);
+		Collections.sort(aList);
+		Collections.sort(bList);
 		
-		System.out.println(aMap.values());
+		boolean isSame = false;
 		
-		for (Map.Entry<Integer, Integer> entry : aMap.entrySet()) {
-			//System.out.println(entry.getKey());
-			System.out.println(entry.getValue());
+		if (aList.equals(aResultList) && bList.equals(bResultList)) {
+			for(int i = 1; i < A.length; i++) {
+				if (A[i] == A[i-1] || B[i] == B[i-1]) {
+					isSame = true;
+				}
+			}
+			if (isSame == false) {
+				return 0;
+			}
 		}
 		
 		
-		return output;
 		
+		for (int i = 0; i < A.length; i++) {
+			if (A[i] < B[i]) {
+				count++;
+				temp = A[i];
+				A[i] = B[i];
+				B[i] = temp;
+			} 
+		}
+		
+		aList.clear();
+		bList.clear();
+		aResultList.clear();
+		bResultList.clear();
+		
+		for (int i = 0; i < A.length; i++) {
+			aList.add(A[i]);
+			bList.add(B[i]);
+			aResultList.add(A[i]);
+			bResultList.add(B[i]);
+		}
+		
+		Collections.sort(aList);
+		Collections.sort(bList);
+		
+		
+		isSame = false;
+		if (aList.equals(aResultList) && bList.equals(bResultList)) {
+			for(int i = 1; i < A.length; i++) {
+				if (A[i] == A[i-1] || B[i] == B[i-1]) {
+					isSame = true;
+				}
+			}
+			if (isSame == false) {
+				return count;
+			}
+			else {
+				return -1;
+			}
+		}
+		else {
+			return -1;
+		}
+
 	}
 	
 	
