@@ -8,8 +8,8 @@ public class Interview {
 
 	public static void main(String[] args) {
 		
-		String E = "10:10";
-		String L = "15:10";
+		String E = "23:00";
+		String L = "04:00";
 		
 		System.out.println(solution(E, L));
 
@@ -22,6 +22,16 @@ public class Interview {
 		final int FIRST_HOUR_COST = 3;
 		final int SUCCESSIVE_COST = 4;
 		
+		String[] eHour = eTime.split(":");
+		String[] lHour = lTime.split(":");
+		int eHourInt = Integer.parseInt(eHour[0]);
+		int lHourInt = Integer.parseInt(lHour[0]);
+		
+		if (eHourInt > lHourInt) {
+			lHourInt = lHourInt + 24;
+			lHour[0] = Integer.toString(lHourInt);
+			lTime = lHour[0] + ":" + lHour[1];
+		}
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 		
@@ -30,11 +40,14 @@ public class Interview {
 		Date l = null;
 		try {
 			e = dateFormat.parse(eTime);
-			l = dateFormat.parse(lTime);
-			
-			long diff = l.getTime() - e.getTime();
+			l = dateFormat.parse(lTime);			
 
-			long diffMin = diff / (60 * 1000) % 60;
+			long diff = 0;
+
+			diff = l.getTime() - e.getTime();	
+			
+			
+			long diffMin =  diff / (60 * 1000) % 60;
 			long diffHour = diff / (60 * 60 * 1000) % 24;
 			
 			
